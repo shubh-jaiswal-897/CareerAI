@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Sparkles, Mail, Lock, User, ArrowRight } from 'lucide-react';
+import Navbar from './Navbar';
+import Footer from './Footer';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -17,12 +19,16 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-gray-200 flex items-center justify-center p-4 relative overflow-hidden selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-[#0b0f19] text-gray-200 flex flex-col relative overflow-hidden selection:bg-indigo-500 selection:text-white">
       {/* Background Orbs */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-500/20 blur-[120px] pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-500/20 blur-[120px] pointer-events-none" />
 
-      <div className="w-full max-w-md glass-card relative z-10 animate-[fadeIn_0.5s_ease-out]">
+      {/* Navigation */}
+      <Navbar />
+
+      <main className="flex-1 flex items-center justify-center p-4 relative z-10 my-10">
+        <div className="w-full max-w-md glass-card animate-[fadeIn_0.5s_ease-out]">
         <div className="flex flex-col items-center mb-8">
           <Link to="/" className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-[0_0_20px_rgba(99,102,241,0.25)] mb-4 hover:scale-105 transition-transform">
             <Sparkles size={24} className="text-white" />
@@ -92,6 +98,10 @@ export default function Register() {
           </Link>
         </p>
       </div>
+    </main>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }

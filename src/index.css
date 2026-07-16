@@ -239,6 +239,26 @@ h1, h2, h3, h4, h5, h6 {
   50% { opacity: 1; }
 }
 
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(var(--rotate-deg, 0deg)); }
+  50% { transform: translateY(-10px) rotate(var(--rotate-deg, 0deg)); }
+}
+
+@keyframes float-reverse {
+  0%, 100% { transform: translateY(0) rotate(var(--rotate-deg, 0deg)); }
+  50% { transform: translateY(10px) rotate(var(--rotate-deg, 0deg)); }
+}
+
+.animate-float-card-1 {
+  --rotate-deg: -3deg;
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-card-2 {
+  --rotate-deg: 3deg;
+  animation: float-reverse 6s ease-in-out infinite;
+}
+
 /* Loading Spinner & Animations */
 .spinner {
   width: 24px;

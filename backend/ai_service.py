@@ -42,16 +42,22 @@ async def generate_career_advice(user_message: str, context: dict = None):
 async def analyze_resume_text(resume_text: str):
     prompt = f"""
     You are an expert ATS and Resume Reviewer. Analyze the following resume text and provide:
-    1. A score out of 100
-    2. A list of 3-4 pros (strengths)
-    3. A list of 3-4 cons (weaknesses)
-    4. A list of actionable recommendations
+    1. A match score out of 100
+    2. An ATS compatibility score out of 100
+    3. A layout formatting score out of 100
+    4. A concise summary review
+    5. A list of 3-4 strengths (pros)
+    6. A list of 3-4 gaps (weaknesses / missing keywords)
+    7. A list of actionable recommendations
     
     Return the output STRICTLY in JSON format matching this schema:
     {{
       "score": int,
-      "pros": ["pro1", "pro2"],
-      "cons": ["con1", "con2"],
+      "atsScore": int,
+      "formattingScore": int,
+      "summary": "conciliation summary here",
+      "strengths": ["strength1", "strength2"],
+      "gaps": ["gap1", "gap2"],
       "recommendations": ["rec1", "rec2"]
     }}
     
@@ -64,9 +70,12 @@ async def analyze_resume_text(resume_text: str):
     if not response_text:
         return {
             "score": 75,
-            "pros": ["Good layout", "Clear experience section"],
-            "cons": ["Lacks quantifiable metrics", "Missing keyword optimization"],
-            "recommendations": ["Add more numbers to your impact bullets", "Include a skills summary at the top"]
+            "atsScore": 80,
+            "formattingScore": 72,
+            "summary": "The resume possesses solid experience definitions, but needs critical keywords integration to pass standard ATS filters.",
+            "strengths": ["Clean sections outline", "Strong experience definitions"],
+            "gaps": ["Missing target framework keywords", "Lacks quantifiable metrics"],
+            "recommendations": ["Add specific keywords matching target role descriptions", "Quantify bullet points with numeric impact achievements"]
         }
         
     text = response_text.strip()
@@ -83,7 +92,10 @@ async def analyze_resume_text(resume_text: str):
         # Fallback if parsing fails
         return {
             "score": 50,
-            "pros": ["Could not parse pros"],
-            "cons": ["Could not parse cons"],
-            "recommendations": ["Ensure resume text is clear"]
+            "atsScore": 50,
+            "formattingScore": 50,
+            "summary": "Failed to parse AI review. Please check file format content.",
+            "strengths": ["Readable layout"],
+            "gaps": ["Unclear layout parameters"],
+            "recommendations": ["Ensure resume text is clear and uncorrupted"]
         }

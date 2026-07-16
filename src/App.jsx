@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { 
-  Briefcase, 
-  FileText, 
-  MessageSquare, 
-  Settings, 
-  Key, 
-  Sparkles,
-  Menu,
-  X,
-  Info
-} from 'lucide-react';
+import { Key, Info } from 'lucide-react';
+import DashboardHub from './components/DashboardHub';
 import RoadmapView from './components/RoadmapView';
 import ResumeAnalyzer from './components/ResumeAnalyzer';
+import MockInterview from './components/MockInterview';
 import CareerCoach from './components/CareerCoach';
 import LandingPage from './components/LandingPage';
+import Features from './components/Features';
+import AboutUs from './components/AboutUs';
+import ContactUs from './components/ContactUs';
 import Login from './components/Login';
 import Register from './components/Register';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 function MainApp() {
-  const [activeTab, setActiveTab] = useState('roadmap');
+  const [activeTab, setActiveTab] = useState('dashboard');
   const [showSettings, setShowSettings] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [userGoal, setUserGoal] = useState('');
   const [userSkills, setUserSkills] = useState('');
@@ -47,76 +43,18 @@ function MainApp() {
     localStorage.removeItem('careerai_api_key');
   };
 
-  const NavButtons = ({ isMobile = false }) => (
-    <>
-      <button 
-        className={`btn w-full md:w-auto justify-start md:justify-center ${activeTab === 'roadmap' ? 'btn-primary' : 'btn-secondary'}`}
-        onClick={() => { setActiveTab('roadmap'); setIsMobileMenuOpen(false); }}
-      >
-        <Briefcase size={18} />
-        <span>Goal Roadmap</span>
-      </button>
-      <button 
-        className={`btn w-full md:w-auto justify-start md:justify-center ${activeTab === 'resume' ? 'btn-primary' : 'btn-secondary'}`}
-        onClick={() => { setActiveTab('resume'); setIsMobileMenuOpen(false); }}
-      >
-        <FileText size={18} />
-        <span>Resume Reviewer</span>
-      </button>
-      <button 
-        className={`btn w-full md:w-auto justify-start md:justify-center ${activeTab === 'chat' ? 'btn-primary' : 'btn-secondary'}`}
-        onClick={() => { setActiveTab('chat'); setIsMobileMenuOpen(false); }}
-      >
-        <MessageSquare size={18} />
-        <span>AI Career Coach</span>
-      </button>
-    </>
-  );
-
   return (
     <div className="app-container">
-      {/* HEADER SECTION */}
-      <header className="sticky top-0 z-50 flex items-center justify-between px-4 md:px-8 py-3 md:py-4 bg-[#0a0f1e]/80 backdrop-blur-xl border-b border-white/10">
-        <div className="flex items-center gap-2 md:gap-3">
-          <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-[0_0_20px_rgba(99,102,241,0.25)]">
-            <Sparkles className="w-5 h-5 md:w-6 md:h-6 text-white" />
-          </div>
-          <span className="font-[Outfit] text-xl md:text-2xl font-extrabold tracking-tight text-white">
-            Career<span className="text-purple-500">AI</span>
-          </span>
-        </div>
+      {/* Reusable Navbar in Dashboard Mode */}
+      <Navbar 
+        isDashboard={true} 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        showSettings={showSettings} 
+        setShowSettings={setShowSettings} 
+        apiKey={apiKey} 
+      />
 
-        {/* DESKTOP NAVIGATION */}
-        <nav className="hidden md:flex items-center gap-3">
-          <NavButtons />
-        </nav>
-
-        {/* ACTIONS & MOBILE TOGGLE */}
-        <div className="flex items-center gap-2 md:gap-4">
-          <button 
-            className="btn btn-secondary !p-2 md:!px-4 md:!py-2" 
-            onClick={() => setShowSettings(!showSettings)}
-          >
-            <Settings size={18} className={showSettings ? 'animate-spin' : ''} />
-            <span className="hidden md:inline">Settings</span>
-            <div className={`w-2 h-2 rounded-full shadow-[0_0_8px] ${apiKey ? 'bg-emerald-500 shadow-emerald-500' : 'bg-amber-500 shadow-amber-500'}`}></div>
-          </button>
-          
-          <button 
-            className="md:hidden btn btn-secondary !p-2"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
-      </header>
-
-      {/* MOBILE NAVIGATION MENU */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-[#0a0f1e]/95 backdrop-blur-xl pt-24 px-6 flex flex-col gap-4">
-          <NavButtons isMobile={true} />
-        </div>
-      )}
 
       {/* SETTINGS DRAWER / DRAWER BACKDROP */}
       {showSettings && (
@@ -171,6 +109,16 @@ function MainApp() {
 
       {/* MAIN CONTAINER */}
       <main className="main-content">
+        {activeTab === 'dashboard' && (
+          <DashboardHub 
+            userGoal={userGoal}
+            roadmapData={roadmapData}
+            resumeText={resumeText}
+            setActiveTab={setActiveTab}
+            apiKey={apiKey}
+          />
+        )}
+
         {activeTab === 'roadmap' && (
           <RoadmapView 
             apiKey={apiKey} 
@@ -189,6 +137,13 @@ function MainApp() {
             setSharedResumeText={setResumeText}
           />
         )}
+
+        {activeTab === 'interview' && (
+          <MockInterview 
+            apiKey={apiKey}
+            userGoal={userGoal}
+          />
+        )}
         
         {activeTab === 'chat' && (
           <CareerCoach 
@@ -202,12 +157,8 @@ function MainApp() {
         )}
       </main>
 
-      <footer className="text-center p-6 border-t border-white/10 bg-[#0a0f1e]/50 text-sm text-gray-400">
-        <p>&copy; {new Date().getFullYear()} CareerAI. Built with React, Tailwind & Gemini AI.</p>
-        <p className="text-xs text-gray-500 mt-1">
-          Configured: {apiKey ? '🔴 Gemini-1.5-Flash (Live Key)' : '🟢 Self-Contained Demo (Mock AI)'}
-        </p>
-      </footer>
+      {/* Reusable Footer */}
+      <Footer apiKey={apiKey} />
     </div>
   );
 }
@@ -217,6 +168,9 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/features" element={<Features />} />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<ContactUs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/app" element={<MainApp />} />
