@@ -15,6 +15,15 @@ import Register from './components/Register';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 
+function ProtectedApp() {
+  const savedUser = localStorage.getItem('careerai_current_user');
+  if (!savedUser) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <MainApp />;
+}
+
 function MainApp() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [showSettings, setShowSettings] = useState(false);
@@ -173,7 +182,7 @@ export default function App() {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/app" element={<MainApp />} />
+        <Route path="/app" element={<ProtectedApp />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>

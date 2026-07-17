@@ -1,110 +1,57 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  Sparkles, 
-  FileText, 
-  Target, 
-  Briefcase, 
-  MessageSquare, 
-  Award, 
-  ArrowRight 
-} from 'lucide-react';
+import { FileText, Target, Briefcase, MessageSquare, Award, ArrowRight } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
 export default function Features() {
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-gray-200 selection:bg-indigo-500 selection:text-white flex flex-col relative overflow-hidden">
-      {/* Background Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-500/10 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-500/10 blur-[120px] pointer-events-none" />
-
+    <div className="page-shell selection:bg-indigo-500 selection:text-white">
       <Navbar />
 
-      <main className="flex-1 w-full max-w-5xl mx-auto px-4 sm:px-8 py-16 sm:py-24 z-10 flex flex-col gap-16">
-        
-        {/* Intro Header */}
-        <div className="text-center max-w-3xl mx-auto flex flex-col gap-4">
-          <span className="text-xs text-indigo-400 font-bold tracking-widest uppercase">Deep Dive</span>
-          <h1 className="font-[Outfit] text-4xl sm:text-5xl font-extrabold text-white">
-            Core <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-purple-400">Features</span>
+      <main className="page-inner flex flex-col gap-8">
+        <section className="section-card text-center">
+          <span className="soft-pill">Core Features</span>
+          <h1 className="mt-4 font-[Outfit] text-4xl font-extrabold text-white sm:text-5xl">
+            A simple workflow for every career step
           </h1>
-          <p className="text-gray-400 text-lg leading-relaxed">
-            CareerAI harnesses state-of-the-art Generative models to address every stage of your job hunt: from initial profile scans to live technical interview training.
+          <p className="mx-auto mt-3 max-w-3xl text-sm text-slate-300 sm:text-base">
+            CareerAI brings resume evaluation, roadmap planning, mock interviews, and live coaching into one streamlined user experience.
           </p>
-        </div>
+        </section>
 
-        {/* Features list breakdown */}
-        <div className="flex flex-col gap-12">
-          
-          {/* FEATURE 1: ATS REVIEWER */}
-          <div className="p-8 rounded-2xl bg-white/5 border border-white/5 flex flex-col md:flex-row gap-8 items-center">
-            <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
-              <FileText size={32} className="text-indigo-400" />
-            </div>
-            <div className="flex-1 flex flex-col gap-2.5">
-              <h2 className="font-[Outfit] text-2xl font-bold text-white">Smart Resume Reviewer</h2>
-              <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
-                Upload your resume in PDF/text formats. Our engine parses the structural layout, performs ATS formatting checklist validation, identifies spelling anomalies, and calculates compatibility scores matching your targeted roles.
-              </p>
-            </div>
-          </div>
+        <section className="grid gap-4">
+          <FeatureRow icon={<FileText size={28} className="text-indigo-300" />} title="Smart Resume Reviewer" desc="Analyze structure, keyword coverage, and the right ATS improvements with clear guidance." />
+          <FeatureRow icon={<Target size={28} className="text-cyan-300" />} title="Skill Gap Roadmap" desc="Match your current strength with your target role and create a practical learning schedule." />
+          <FeatureRow icon={<Award size={28} className="text-purple-300" />} title="AI Mock Interview" desc="Practice realistic interview questions and boost your clarity before the real round." />
+          <FeatureRow icon={<MessageSquare size={28} className="text-pink-300" />} title="Career Coach" desc="Ask focused questions about job search, resume revisions, and career decisions whenever needed." />
+        </section>
 
-          {/* FEATURE 2: ROADMAP GENERATOR */}
-          <div className="p-8 rounded-2xl bg-white/5 border border-white/5 flex flex-col md:flex-row gap-8 items-center">
-            <div className="w-16 h-16 rounded-2xl bg-cyan-500/10 flex items-center justify-center flex-shrink-0">
-              <Target size={32} className="text-cyan-400" />
-            </div>
-            <div className="flex-1 flex flex-col gap-2.5">
-              <h2 className="font-[Outfit] text-2xl font-bold text-white">Skill Gap Roadmap Creator</h2>
-              <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
-                Specify your ideal career role. CareerAI will perform comparative analysis matching your current skill inventories against the target benchmark to formulate a step-by-step custom study curriculum complete with course pointers.
-              </p>
-            </div>
-          </div>
-
-          {/* FEATURE 3: MOCK INTERVIEWER */}
-          <div className="p-8 rounded-2xl bg-white/5 border border-white/5 flex flex-col md:flex-row gap-8 items-center">
-            <div className="w-16 h-16 rounded-2xl bg-purple-500/10 flex items-center justify-center flex-shrink-0">
-              <Award size={32} className="text-purple-400" />
-            </div>
-            <div className="flex-1 flex flex-col gap-2.5">
-              <h2 className="font-[Outfit] text-2xl font-bold text-white">AI Mock Interview Simulator</h2>
-              <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
-                Choose Coding, System Design, or Behavioral tracks. Answer sequential prompts generated by our simulator and receive a comprehensive scoring audit breaking down your technical precision and response structures.
-              </p>
-            </div>
-          </div>
-
-          {/* FEATURE 4: COACH */}
-          <div className="p-8 rounded-2xl bg-white/5 border border-white/5 flex flex-col md:flex-row gap-8 items-center">
-            <div className="w-16 h-16 rounded-2xl bg-pink-500/10 flex items-center justify-center flex-shrink-0">
-              <MessageSquare size={32} className="text-pink-400" />
-            </div>
-            <div className="flex-1 flex flex-col gap-2.5">
-              <h2 className="font-[Outfit] text-2xl font-bold text-white">Context-Aware AI Coach</h2>
-              <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
-                Initiate active chats with a virtual career counselor. Get immediate answers regarding resume revisions, negotiation strategies, interview preparation tactics, and specific career path queries.
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-        {/* CTA */}
-        <div className="p-8 sm:p-12 rounded-2xl bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-transparent border border-indigo-500/20 text-center flex flex-col items-center gap-6 mt-8">
-          <h2 className="font-[Outfit] text-2xl sm:text-3xl font-bold text-white">Ready to test these capabilities?</h2>
-          <p className="text-gray-400 text-sm sm:text-base max-w-lg">
-            Create an account in seconds to begin uploading your resumes and generating syllabi.
-          </p>
-          <Link to="/register" className="btn btn-primary px-8 py-3.5 shadow-lg shadow-indigo-500/10">
-            Start Your Journey <ArrowRight size={18} />
+        <section className="section-card flex flex-col items-center gap-4 text-center">
+          <h2 className="font-[Outfit] text-2xl font-bold text-white">Ready to try it?</h2>
+          <p className="max-w-2xl text-sm text-slate-300">Sign up and experience the full product flow in a few clicks.</p>
+          <Link to="/register" className="btn btn-primary">
+            Start Your Journey
+            <ArrowRight size={18} />
           </Link>
-        </div>
-
+        </section>
       </main>
 
       <Footer />
+    </div>
+  );
+}
+
+function FeatureRow({ icon, title, desc }) {
+  return (
+    <div className="section-card flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <div className="flex items-center gap-4">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5">{icon}</div>
+        <div>
+          <h3 className="font-[Outfit] text-xl font-bold text-white">{title}</h3>
+          <p className="text-sm text-slate-300">{desc}</p>
+        </div>
+      </div>
     </div>
   );
 }

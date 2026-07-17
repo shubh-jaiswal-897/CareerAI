@@ -6,130 +6,80 @@ import Footer from './Footer';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-gray-200 overflow-hidden relative selection:bg-indigo-500 selection:text-white flex flex-col">
-      {/* Background Orbs */}
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-500/20 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-500/20 blur-[120px] pointer-events-none" />
-
-      {/* Floating Animated Background Cards (Wow Effect) */}
-      <div className="hidden lg:block absolute top-1/4 right-10 w-64 h-32 glass-card animate-bounce shadow-glow-purple transform rotate-12 opacity-40 blur-[2px] pointer-events-none"></div>
-      <div className="hidden lg:block absolute bottom-1/4 left-10 w-48 h-48 rounded-full bg-gradient-to-tr from-indigo-500/30 to-cyan-500/30 blur-2xl animate-pulse pointer-events-none"></div>
-
-      {/* Reusable Navigation Bar */}
+    <div className="page-shell selection:bg-indigo-500 selection:text-white">
       <Navbar />
 
-      {/* Hero Section */}
-      <main className="w-full relative z-10 flex flex-col items-center justify-center text-center px-4 sm:px-8 pt-16 sm:pt-24 pb-24 max-w-5xl mx-auto gap-16">
-        <div className="flex flex-col items-center text-center max-w-3xl w-full">
-          <h1 className="w-full font-[Outfit] text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight leading-tight mb-6 text-center">
-            Supercharge your career with <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 via-cyan-500 to-purple-500">AI Guidance</span>
-          </h1>
-          
-          <p className="text-lg sm:text-xl text-gray-400 mb-10 leading-relaxed max-w-2xl text-center font-normal">
-            Upload your resume, discover skill gaps, and get a personalized roadmap to land your dream job faster than ever before.
+      <main className="page-inner z-10 flex flex-col gap-10">
+        <section className="hero-card overflow-hidden p-6 sm:p-10 lg:p-14">
+          <div className="grid items-center gap-8 lg:grid-cols-[1.15fr_0.85fr]">
+            <div className="flex flex-col items-start gap-5 text-left">
+              <span className="soft-pill">AI Career Growth Platform</span>
+              <h1 className="font-[Outfit] text-4xl font-extrabold tracking-tight text-white sm:text-5xl lg:text-6xl">
+                Build a stronger career path with <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-purple-400">smart AI support</span>
+              </h1>
+              <p className="max-w-2xl text-base text-slate-300 sm:text-lg">
+                CareerAI helps job seekers review resumes, map skill gaps, and prepare with guided AI coaching in one clean and simple workflow.
+              </p>
+              <div className="flex w-full flex-col gap-3 sm:flex-row">
+                <Link to="/register" className="btn btn-primary w-full sm:w-auto">
+                  Start Your Journey
+                  <ArrowRight size={18} />
+                </Link>
+                <Link to="/login" className="btn btn-secondary w-full sm:w-auto">
+                  View Demo
+                </Link>
+              </div>
+            </div>
+
+            <div className="section-card bg-slate-900/60">
+              <div className="mb-4 flex items-center justify-between border-b border-white/10 pb-3">
+                <div className="flex items-center gap-2">
+                  <span className="h-2.5 w-2.5 rounded-full bg-rose-400" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
+                </div>
+                <span className="text-[11px] text-slate-400">careerai.console</span>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="metric-card">
+                  <p className="text-xs uppercase text-slate-400">ATS score</p>
+                  <p className="mt-2 text-2xl font-bold text-emerald-300">92/100</p>
+                </div>
+                <div className="metric-card">
+                  <p className="text-xs uppercase text-slate-400">Role target</p>
+                  <p className="mt-2 text-lg font-bold text-white">React Engineer</p>
+                </div>
+                <div className="metric-card sm:col-span-2">
+                  <p className="text-xs uppercase text-slate-400">Learning flow</p>
+                  <div className="mt-3 space-y-3 text-sm text-slate-200">
+                    <div className="rounded-xl bg-white/5 p-3">Resume review completed</div>
+                    <div className="rounded-xl bg-indigo-500/10 p-3 text-white">Roadmap generated and active</div>
+                    <div className="rounded-xl bg-white/5 p-3">Interview preparation queued</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="grid gap-4 md:grid-cols-3">
+          <FeatureCard icon={<FileText size={24} className="text-indigo-300" />} title="Resume Reviewer" desc="Quickly check ATS alignment and get simple feedback on what to improve." />
+          <FeatureCard icon={<Target size={24} className="text-cyan-300" />} title="Roadmap Builder" desc="Turn your career goal into a realistic step-by-step learning plan." />
+          <FeatureCard icon={<Briefcase size={24} className="text-purple-300" />} title="Mock Interview" desc="Practice with guided AI interview prompts and keep your confidence high." />
+        </section>
+
+        <section className="section-card flex flex-col items-center gap-4 text-center">
+          <h2 className="font-[Outfit] text-2xl font-bold text-white sm:text-3xl">Built to look polished, feel easy to use</h2>
+          <p className="max-w-2xl text-sm text-slate-300 sm:text-base">
+            The design is intentionally clean, responsive, and presentation-ready so it can be shown confidently to stakeholders and leadership.
           </p>
-          
-          <div className="flex flex-col sm:flex-row items-center gap-4 justify-center w-full">
-            <Link to="/register" className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold text-lg shadow-[0_0_20px_rgba(99,102,241,0.25)] hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] hover:scale-[1.02] transition-all flex items-center justify-center gap-2">
-              Start Your Journey <ArrowRight size={20} />
-            </Link>
-            <Link to="/login" className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white/5 border border-white/10 text-gray-200 font-semibold text-lg hover:bg-white/10 transition-all text-center">
-              View Live Demo
-            </Link>
-          </div>
-        </div>
-
-        {/* Clean Dashboard Preview Card (No messy overlaps) */}
-        <div className="w-full max-w-4xl rounded-2xl bg-white/5 border border-white/10 shadow-2xl p-6 sm:p-8 flex flex-col gap-6 mt-4 backdrop-blur-xl text-left">
-          {/* Header Row */}
-          <div className="flex items-center justify-between border-b border-white/5 pb-4">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-rose-500/80"></div>
-              <div className="w-3 h-3 rounded-full bg-amber-500/80"></div>
-              <div className="w-3 h-3 rounded-full bg-emerald-500/80"></div>
-              <span className="text-[11px] text-gray-500 ml-2 font-mono">careerai.console</span>
-            </div>
-            <div className="text-[10px] sm:text-xs text-gray-400 bg-white/5 px-3 py-1 rounded-full font-medium">
-              Target Profile: React Engineer
-            </div>
-          </div>
-
-          {/* Interior Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-            {/* Left Metrics */}
-            <div className="md:col-span-5 flex flex-col gap-4">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between">
-                <div>
-                  <span className="text-[10px] text-gray-400 uppercase tracking-wider block font-bold">ATS Score</span>
-                  <span className="text-2xl font-extrabold text-emerald-400 font-[Outfit]">92/100</span>
-                </div>
-                <span className="px-2 py-1 bg-emerald-500/10 text-emerald-400 text-[10px] rounded-md font-bold">Excellent</span>
-              </div>
-              <div className="p-4 rounded-xl bg-white/5 border border-white/5 flex items-center justify-between">
-                <div>
-                  <span className="text-[10px] text-gray-400 uppercase tracking-wider block font-bold">Syllabus Progress</span>
-                  <span className="text-base font-bold text-white">Phase 2: System Design</span>
-                </div>
-                <span className="text-xs text-indigo-400 font-bold">65%</span>
-              </div>
-            </div>
-
-            {/* Right Flowchart Simulation */}
-            <div className="md:col-span-7 flex flex-col gap-3">
-              <div className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">AI Pipeline Status</div>
-              <div className="flex gap-3 items-center p-3 rounded-xl bg-white/5 border border-white/5">
-                <div className="w-6 h-6 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-bold flex items-center justify-center">1</div>
-                <span className="text-xs text-gray-200">Parse resume & verify compliance checks</span>
-                <span className="text-[10px] text-indigo-400 font-bold ml-auto">Completed</span>
-              </div>
-              <div className="flex gap-3 items-center p-3 rounded-xl bg-indigo-500/5 border border-indigo-500/10">
-                <div className="w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex items-center justify-center">2</div>
-                <span className="text-xs text-white font-semibold">Generate personalized interactive roadmap</span>
-                <span className="text-[10px] text-purple-400 font-bold ml-auto">Active</span>
-              </div>
-              <div className="flex gap-3 items-center p-3 rounded-xl bg-white/5 border border-white/5 opacity-55">
-                <div className="w-6 h-6 rounded-full bg-gray-500/20 text-gray-400 text-xs font-bold flex items-center justify-center">3</div>
-                <span className="text-xs text-gray-300 font-normal">Initiate AI technical mock interview</span>
-                <span className="text-[10px] text-gray-500 ml-auto">Queued</span>
-              </div>
-            </div>
-          </div>
-        </div>
+          <Link to="/features" className="btn btn-secondary">
+            Explore Full Features
+            <ArrowRight size={16} />
+          </Link>
+        </section>
       </main>
 
-      {/* Feature Cards Summary */}
-      <div className="w-full relative z-10 max-w-7xl mx-auto px-4 sm:px-8 pb-24">
-        <div className="text-center mb-12">
-          <h2 className="font-[Outfit] text-3xl font-bold text-white">Full-Suite AI Tools</h2>
-          <p className="text-sm text-gray-400 mt-2">Explore the tools designed to guide you from start to finish.</p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <FeatureCard 
-            icon={<FileText size={24} className="text-indigo-400" />}
-            title="Smart Resume Analyzer"
-            desc="AI parses your resume to highlight strengths and recommend crucial improvements."
-          />
-          <FeatureCard 
-            icon={<Target size={24} className="text-cyan-400" />}
-            title="Skill Gap Detector"
-            desc="Match your current skills against your target role to see exactly what you need to learn."
-          />
-          <FeatureCard 
-            icon={<Briefcase size={24} className="text-purple-400" />}
-            title="Personalized Roadmap"
-            desc="Get a step-by-step learning plan tailored specifically to your career goals."
-          />
-        </div>
-
-        <div className="flex justify-center mt-10">
-          <Link to="/features" className="btn btn-secondary text-sm font-semibold flex items-center gap-2">
-            Explore All Features <ArrowRight size={16} />
-          </Link>
-        </div>
-      </div>
-
-      {/* Footer component */}
       <Footer />
     </div>
   );
@@ -137,12 +87,10 @@ export default function LandingPage() {
 
 function FeatureCard({ icon, title, desc }) {
   return (
-    <div className="p-6 sm:p-8 rounded-2xl bg-[#111928]/65 border border-white/5 backdrop-blur-xl hover:border-white/10 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1 transition-all text-center flex flex-col items-center gap-4 group cursor-pointer">
-      <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center group-hover:scale-110 group-hover:bg-indigo-500/10 transition-all duration-300">
-        {icon}
-      </div>
-      <h3 className="font-[Outfit] text-xl font-semibold text-white">{title}</h3>
-      <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
+    <div className="metric-card flex flex-col items-start gap-3 text-left">
+      <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white/5">{icon}</div>
+      <h3 className="font-[Outfit] text-lg font-bold text-white">{title}</h3>
+      <p className="text-sm text-slate-300">{desc}</p>
     </div>
   );
 }

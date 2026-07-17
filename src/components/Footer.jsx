@@ -33,6 +33,33 @@ export default function Footer({ apiKey: passedApiKey }) {
       {/* Main Footer Links & Bio */}
       <div className="w-full px-4 sm:px-6 lg:px-8 py-12 md:py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
         
+        {/* Bio & Branding (left aligned on larger screens) */}
+        <div className="lg:col-span-2 flex flex-col items-start text-left gap-5">
+          <Link to="/" className="flex items-center justify-start gap-2.5 group">
+            <span className="font-[Outfit] text-xl font-extrabold tracking-tight text-white">
+              Career<span className="text-purple-500">AI</span>
+            </span>
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.25)] group-hover:scale-105 transition-all">
+              <Sparkles size={18} className="text-white" />
+            </div>
+          </Link>
+          <p className="text-sm text-gray-400 max-w-sm leading-relaxed">
+            Supercharge your career guidance using AI. Generate tailormade roadmaps, analyze ATS resume scores, and chat with a context-aware Career Coach.
+          </p>
+          {/* Social Links */}
+          <div className="flex items-center justify-start gap-3.5 mt-2">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:border-white/10 hover:shadow-[0_0_12px_rgba(255,255,255,0.05)] transition-all">
+              <Github size={16} />
+            </a>
+            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:border-white/10 hover:shadow-[0_0_12px_rgba(255,255,255,0.05)] transition-all">
+              <Twitter size={16} />
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:border-white/10 hover:shadow-[0_0_12px_rgba(255,255,255,0.05)] transition-all">
+              <Linkedin size={16} />
+            </a>
+          </div>
+        </div>
+
         {/* Platform Links */}
         <div className="flex flex-col gap-4">
           <h4 className="font-[Outfit] text-sm font-semibold text-white tracking-wider uppercase">Platform</h4>
@@ -88,33 +115,6 @@ export default function Footer({ apiKey: passedApiKey }) {
               <a href="https://github.com" className="hover:text-white transition-colors">Terms & Conditions</a>
             </li>
           </ul>
-        </div>
-
-        {/* Bio & Branding (Spans 2 columns on lg, placed last to align to the right) */}
-        <div className="lg:col-span-2 flex flex-col items-center text-center lg:items-end lg:text-right gap-5">
-          <Link to="/" className="flex items-center justify-center lg:justify-end gap-2.5 group">
-            <span className="font-[Outfit] text-xl font-extrabold tracking-tight text-white">
-              Career<span className="text-purple-500">AI</span>
-            </span>
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.25)] group-hover:scale-105 transition-all">
-              <Sparkles size={18} className="text-white" />
-            </div>
-          </Link>
-          <p className="text-sm text-gray-400 max-w-sm leading-relaxed">
-            Supercharge your career guidance using AI. Generate tailormade roadmaps, analyze ATS resume scores, and chat with a context-aware Career Coach.
-          </p>
-          {/* Social Links */}
-          <div className="flex items-center justify-center lg:justify-end gap-3.5 mt-2">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:border-white/10 hover:shadow-[0_0_12px_rgba(255,255,255,0.05)] transition-all">
-              <Github size={16} />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:border-white/10 hover:shadow-[0_0_12px_rgba(255,255,255,0.05)] transition-all">
-              <Twitter size={16} />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg bg-white/5 border border-white/5 text-gray-400 hover:text-white hover:border-white/10 hover:shadow-[0_0_12px_rgba(255,255,255,0.05)] transition-all">
-              <Linkedin size={16} />
-            </a>
-          </div>
         </div>
 
       </div>
