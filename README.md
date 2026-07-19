@@ -82,3 +82,6 @@ Open Design is a local-first, open-source workspace that turns coding agents (li
    pnpm tools-dev
    ```
 5. Open your browser and navigate to the local portal (usually [http://localhost:7456](http://localhost:7456)) to design your mockups, wireframes, and code prototypes.
+
+npm run dev
+# or: yarn dev / pnpm dev
