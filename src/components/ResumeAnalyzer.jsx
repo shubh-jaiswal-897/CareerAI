@@ -85,7 +85,7 @@ export default function ResumeAnalyzer({ apiKey, setSharedResumeText }) {
     formData.append('targetRole', targetRole);
 
     try {
-      const response = await fetch('/api/analyze-resume', {
+      const response = await fetch('/api/resume/analyze-resume', {
         method: 'POST',
         headers: {
           'x-api-key': apiKey || ''
@@ -93,8 +93,12 @@ export default function ResumeAnalyzer({ apiKey, setSharedResumeText }) {
         body: formData
       });
 
-      const result = await response.json();
-      if (result.success) {
+      const contentType = response.headers.get('content-type') || '';
+      const result = contentType.includes('application/json')
+        ? await response.json()
+        : { error: await response.text() };
+
+      if (response.ok && result.success) {
         setResults(result.data);
         // Save the parsed text size context (optional, mock doesn't send raw text, but backend saves raw text size)
         if (result.data.parsedTextLength) {

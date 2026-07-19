@@ -1,15 +1,14 @@
-from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException
+from fastapi import APIRouter, UploadFile, File, Form, Depends, HTTPException, Request
 import fitz  # PyMuPDF
-from io import BytesIO
 from ai_service import analyze_resume_text
 from database import get_db
-from models.resume import ResumeAnalysisInDB
 import uuid
 
 router = APIRouter()
 
 @router.post("/analyze-resume")
 async def upload_resume(
+    request: Request,
     resume: UploadFile = File(...), 
     targetRole: str = Form(...),
     user_id: str = Form("anonymous"),
@@ -37,8 +36,10 @@ async def upload_resume(
     if not text.strip():
         raise HTTPException(status_code=400, detail="No extractable text found in resume")
         
+    api_key = request.headers.get("x-api-key")
+
     # Send to AI
-    analysis = await analyze_resume_text(text)
+    analysis = await analyze_resume_text(text, api_key=api_key)
     
     # Save to MongoDB (Resilient save, do not block request if database is offline)
     record_id = str(uuid.uuid4())

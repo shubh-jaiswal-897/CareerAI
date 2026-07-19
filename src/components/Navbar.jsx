@@ -109,9 +109,6 @@ export default function Navbar({
             </>
           ) : (
             <div className="hidden items-center gap-2 md:flex">
-              <Link to="/login" className="btn btn-secondary !px-4 !py-2 text-sm">
-                Log In
-              </Link>
               <Link to="/register" className="btn btn-primary !px-4 !py-2 text-sm">
                 Get Started
                 <ArrowRight size={16} />

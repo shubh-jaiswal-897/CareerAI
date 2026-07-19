@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from pydantic import BaseModel
 from ai_service import generate_career_advice
 
@@ -9,6 +9,7 @@ class ChatRequest(BaseModel):
     context: dict = {}
 
 @router.post("/")
-async def chat_interaction(req: ChatRequest):
-    reply = await generate_career_advice(req.message, req.context)
+async def chat_interaction(request: Request, req: ChatRequest):
+    api_key = request.headers.get("x-api-key")
+    reply = await generate_career_advice(req.message, req.context, api_key=api_key)
     return {"reply": reply}

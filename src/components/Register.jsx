@@ -4,6 +4,41 @@ import { Sparkles, Mail, Lock, User, ArrowRight, Rocket, BadgeCheck, AlertCircle
 import Navbar from './Navbar';
 import Footer from './Footer';
 
+const DEMO_USERS_KEY = 'careerai_demo_users';
+
+const loadDemoUsers = () => {
+  try {
+    return JSON.parse(localStorage.getItem(DEMO_USERS_KEY) || '[]');
+  } catch {
+    return [];
+  }
+};
+
+const saveDemoUsers = (users) => {
+  localStorage.setItem(DEMO_USERS_KEY, JSON.stringify(users));
+};
+
+const createDemoUser = ({ name, email, password }) => {
+  const users = loadDemoUsers();
+  const normalizedEmail = email.toLowerCase();
+
+  if (users.some((user) => user.email.toLowerCase() === normalizedEmail)) {
+    throw new Error('Email already registered');
+  }
+
+  const newUser = {
+    id: `demo-${Date.now()}`,
+    name,
+    email: normalizedEmail,
+    password,
+  };
+
+  users.push(newUser);
+  saveDemoUsers(users);
+
+  return { user: { id: newUser.id, email: newUser.email, name: newUser.name } };
+};
+
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -33,7 +68,11 @@ export default function Register() {
         body: JSON.stringify({ name, email, password }),
       });
 
-      const result = await response.json();
+      const contentType = response.headers.get('content-type') || '';
+      const result = contentType.includes('application/json')
+        ? await response.json()
+        : { detail: await response.text() };
+
       if (!response.ok) {
         throw new Error(result.detail || 'Registration failed.');
       }
@@ -41,7 +80,13 @@ export default function Register() {
       localStorage.setItem('careerai_current_user', JSON.stringify(result.user));
       navigate('/app');
     } catch (err) {
-      setError(err.message || 'Unable to create the account.');
+      try {
+        const demoResult = createDemoUser({ name, email, password });
+        localStorage.setItem('careerai_current_user', JSON.stringify(demoResult.user));
+        navigate('/app');
+      } catch (fallbackErr) {
+        setError(fallbackErr.message || err.message || 'Unable to create the account.');
+      }
     } finally {
       setLoading(false);
     }

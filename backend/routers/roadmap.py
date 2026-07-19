@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from pydantic import BaseModel
 from ai_service import generate_with_gemini
 import json
@@ -10,7 +10,7 @@ class RoadmapRequest(BaseModel):
     skills: str
 
 @router.post("/")
-async def generate_roadmap(req: RoadmapRequest):
+async def generate_roadmap(request: Request, req: RoadmapRequest):
     prompt = f"""
     You are an expert Career Advisor. Create a step-by-step learning roadmap for a user whose career goal is '{req.goal}' and who currently has these skills: '{req.skills}'.
     
@@ -21,7 +21,8 @@ async def generate_roadmap(req: RoadmapRequest):
     ]
     """
     
-    response_text = await generate_with_gemini(prompt)
+    api_key = request.headers.get("x-api-key")
+    response_text = await generate_with_gemini(prompt, api_key=api_key)
     
     if not response_text:
         return {

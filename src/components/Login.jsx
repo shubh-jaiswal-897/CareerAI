@@ -4,6 +4,16 @@ import { Sparkles, Mail, Lock, ArrowRight, ShieldCheck, Zap, AlertCircle } from 
 import Navbar from './Navbar';
 import Footer from './Footer';
 
+const DEMO_USERS_KEY = 'careerai_demo_users';
+
+const loadDemoUsers = () => {
+  try {
+    return JSON.parse(localStorage.getItem(DEMO_USERS_KEY) || '[]');
+  } catch {
+    return [];
+  }
+};
+
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +36,11 @@ export default function Login() {
         body: JSON.stringify({ email, password }),
       });
 
-      const result = await response.json();
+      const contentType = response.headers.get('content-type') || '';
+      const result = contentType.includes('application/json')
+        ? await response.json()
+        : { detail: await response.text() };
+
       if (!response.ok) {
         throw new Error(result.detail || 'Login failed.');
       }
@@ -35,6 +49,21 @@ export default function Login() {
       localStorage.setItem('careerai_remember_me', String(rememberMe));
       navigate('/app');
     } catch (err) {
+      const users = loadDemoUsers();
+      const demoUser = users.find(
+        (user) => user.email.toLowerCase() === email.toLowerCase() && user.password === password
+      );
+
+      if (demoUser) {
+        localStorage.setItem(
+          'careerai_current_user',
+          JSON.stringify({ id: demoUser.id, email: demoUser.email, name: demoUser.name })
+        );
+        localStorage.setItem('careerai_remember_me', String(rememberMe));
+        navigate('/app');
+        return;
+      }
+
       setError(err.message || 'Unable to sign in. Please try again.');
     } finally {
       setLoading(false);
