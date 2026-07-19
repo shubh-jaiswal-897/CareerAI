@@ -5,7 +5,7 @@
   "main": "backend/main.py",
   "type": "module",
   "scripts": {
-    "server": "cd backend && ..\\venv\\Scripts\\python.exe -m uvicorn main:app --reload",
+    "server": "cd api && uvicorn main:app --reload",
     "client": "vite",
     "build": "vite build",
     "preview": "vite preview",
